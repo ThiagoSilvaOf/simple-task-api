@@ -1,0 +1,31 @@
+const ServiceTasks = require("../services/tasks");
+const service = new ServiceTasks();
+
+class ControllerTasks {
+  ListarTarefas(req, res) {
+    try {
+      const tasks = service.ListarTarefas();
+      res.status(200).json({ tasks });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  ListarTarefa(req, res) {}
+
+  CriarTarefa(req, res) {
+    try {
+      const { title, description, status } = req.body;
+      service.CriarTarefa(title, description, status)
+      res.status(201).json({mensagem:"Tarefa Adicionada com sucesso"})
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  AtualizarTarefa(req, res) {}
+
+  DeletarTarefa(req, res) {}
+}
+
+module.exports = ControllerTasks;
