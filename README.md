@@ -15,4 +15,4 @@ Este é um projeto de **API RESTful** para o gerenciamento de tarefas, com opera
 - **Node.js** & **Express** para o backend
 - **Sequelize** como ORM para interação com o banco de dados
 - **MySQL** como banco de dados relacional
-- **Jest** para testes unitários 
+- **Jest** para testes unitários
