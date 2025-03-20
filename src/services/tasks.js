@@ -1,29 +1,31 @@
-const task = require("../models/tasks")
+const TaskModel = require("../models/tasks")
 
 class ServiceTasks{
-  async FindAll(){
-    return task.findAll();
+  async FindAll(userId){
+    return TaskModel.findAll({ where:{ userId } });
   }
 
-  async FindById(id){
-    const foundTask = await task.findByPk(id);
-    if (!foundTask) {
-      throw new Error('Tarefa não encontrada');
+  async FindById(id, userId){
+    const task = await TaskModel.findOne({
+      where: { id, userId }, 
+    });
+    if (!task) {
+      throw new Error('Tarefa não encontrada ou você não tem permissão para acessá-la');
     }
-    return foundTask;
+    return task;
   }
 
-  async Create(title, description, status){
+  async Create(title, description, status, userId){
     if(!title){
       throw new Error("Favor informar Título");
     }else if(!status || !['não concluída', 'em andamento', 'concluída'].includes(status)){
       throw new Error("Favor informar o status ('não concluída', 'em andamento', 'concluída)");
     }
-    return task.create({title, description, status})
+    return TaskModel.create({title, description, status, userId})
   }
 
-  async Update(id, title, description, status){
-    const oldTask = await this.FindById(id)
+  async Update(id, title, description, status, userId){
+    const oldTask = await this.FindById(id, userId)
 
     if (!oldTask) {
       throw new Error("Tarefa não encontrada");
@@ -38,8 +40,8 @@ class ServiceTasks{
 
   }
 
-  async Delete(id){
-    const task = await this.FindById(id);
+  async Delete(id, userId){
+    const task = await this.FindById(id, userId);
     if (!task) {
       throw new Error('Tarefa não encontrada');
     }

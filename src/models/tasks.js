@@ -1,4 +1,4 @@
-const database = require("../database")
+const database = require("../database");
 
 class Task{
   constructor(){
@@ -21,6 +21,14 @@ class Task{
         type:database.db.Sequelize.ENUM('não concluída', 'em andamento', 'concluída'),
         allowNull:false,
         defaultValue:'não concluída'
+      },
+      userId:{
+        type: database.db.Sequelize.INTEGER,
+        allowNull:false,
+        references:{
+          model:"users",
+          key:"id"
+        }
       }
     })
   }

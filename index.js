@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
-const routers = require("./src/routes/tasks");
+const taskRoutes = require("./src/routes/tasks");
+const userRoutes = require("./src/routes/users");
 const port = 3000;
 const database = require("./src/database");
 
+
 app.use(express.json());
-app.use(routers);
+app.use(taskRoutes);
+app.use(userRoutes);
 
 database.db
   .sync({ force: true })
